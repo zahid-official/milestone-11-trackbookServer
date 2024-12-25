@@ -73,11 +73,6 @@ async function run() {
       res.send(result);
     });
 
-
-
-
-
-
     // create for addBook
     app.post("/addBook", async (req, res) => {
       const data = req.body;
@@ -86,15 +81,15 @@ async function run() {
     });
 
     // for borrowBook
-    app.post('/borrow', async(req, res) => {
+    app.post("/borrow", async (req, res) => {
       const isbn = req.body.isbn;
       const borrowerEmail = req.body.borrowerEmail;
-      const filter = {isbn, borrowerEmail};
+      const filter = { isbn, borrowerEmail };
       const isExist = await borrowedCollection.findOne(filter);
-      
+
       // validation is already borrowed
-      if(isExist){
-        return res.send(null)
+      if (isExist) {
+        return res.send(null);
       }
 
       // insert data to borrowedCollection
@@ -102,18 +97,14 @@ async function run() {
       await borrowedCollection.insertOne(data);
 
       // decrease quantity in booksCollection
-      const query = {_id: new ObjectId(isbn)};
+      const query = { _id: new ObjectId(isbn) };
       const decrease = {
-        $inc: {quantity: -1}
-      }
+        $inc: { quantity: -1 },
+      };
       await booksCollection.updateOne(query, decrease);
       const result = await booksCollection.findOne(query);
       res.send(result);
-    })
-
-    
-
-
+    });
 
     // update for UpdateBook
     app.put("/updateBook/:id", async (req, res) => {
@@ -135,41 +126,41 @@ async function run() {
       const result = await booksCollection.updateOne(
         query,
         updatedData,
-        options,
+        options
       );
       res.send(result);
     });
 
-
-
-
-
-
-
     // delete for borrowedBooks
-    app.delete('/returnBook', async(req, res) => {
+    app.delete("/returnBook", async (req, res) => {
       // delete
       const isbn = req.query.isbn;
-      const query = {isbn}
+      const query = { isbn };
       await borrowedCollection.deleteOne(query);
 
       // increase quantity in booksCollection
-      const cursor = {_id: new ObjectId(isbn)};
+      const cursor = { _id: new ObjectId(isbn) };
       const increase = {
-        $inc: {quantity: 1}
-      }
+        $inc: { quantity: 1 },
+      };
       await booksCollection.updateOne(cursor, increase);
 
       // update ui borrowedBooks
       const borrowerEmail = req.query.borrowerEmail;
-      const filter = {borrowerEmail}
+      const filter = { borrowerEmail };
       const result = await borrowedCollection.find(filter).toArray();
       res.send(result);
-    })
+    });
+
+    // filter for allBooks
+    app.get("/filter", async (req, res) => {
+      const query = { quantity: { $gt: 0 } };
+      const result = await booksCollection.find(query).toArray();
+      res.send(result);
+    });
 
 
-
-
+    
   } finally {
   }
 }
