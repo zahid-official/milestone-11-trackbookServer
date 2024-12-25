@@ -143,6 +143,33 @@ async function run() {
 
 
 
+
+
+
+    // delete for borrowedBooks
+    app.delete('/returnBook', async(req, res) => {
+      // delete
+      const isbn = req.query.isbn;
+      const query = {isbn}
+      await borrowedCollection.deleteOne(query);
+
+      // increase quantity in booksCollection
+      const cursor = {_id: new ObjectId(isbn)};
+      const increase = {
+        $inc: {quantity: 1}
+      }
+      await booksCollection.updateOne(cursor, increase);
+
+      // update ui borrowedBooks
+      const borrowerEmail = req.query.borrowerEmail;
+      const filter = {borrowerEmail}
+      const result = await borrowedCollection.find(filter).toArray();
+      res.send(result);
+    })
+
+
+
+
   } finally {
   }
 }
