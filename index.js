@@ -66,12 +66,28 @@ async function run() {
     });
 
     // for borrowedBooks
-    app.get('/borrowedBooks/:email', async(req, res) => {
+    app.get("/borrowedBooks/:email", async (req, res) => {
       const email = req.params.email;
-      const query = {borrowerEmail: email}
+      const query = { borrowerEmail: email };
       const result = await borrowedCollection.find(query).toArray();
       res.send(result);
-    })
+    });
+
+
+
+
+
+
+    // create for addBook
+    app.post("/addBook", async (req, res) => {
+      const data = req.body;
+      const result = await booksCollection.insertOne(data);
+      res.send(result);
+    });
+
+
+
+
 
 
   } finally {
