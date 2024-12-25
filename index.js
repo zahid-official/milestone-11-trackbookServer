@@ -85,7 +85,33 @@ async function run() {
       res.send(result);
     });
 
+    // for borrowBook
+    app.post('/borrow', async(req, res) => {
+      const isbn = req.body.isbn;
+      const borrowerEmail = req.body.borrowerEmail;
+      const filter = {isbn, borrowerEmail};
+      const isExist = await borrowedCollection.findOne(filter);
+      
+      // validation is already borrowed
+      if(isExist){
+        return res.send(null)
+      }
 
+      // insert data to borrowedCollection
+      const data = req.body;
+      await borrowedCollection.insertOne(data);
+
+      // decrease quantity in booksCollection
+      const query = {_id: new ObjectId(isbn)};
+      const decrease = {
+        $inc: {quantity: -1}
+      }
+      await booksCollection.updateOne(query, decrease);
+      const result = await booksCollection.findOne(query);
+      res.send(result);
+    })
+
+    
 
 
 
