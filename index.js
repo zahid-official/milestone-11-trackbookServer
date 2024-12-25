@@ -115,6 +115,33 @@ async function run() {
 
 
 
+    // update for UpdateBook
+    app.put("/updateBook/:id", async (req, res) => {
+      const id = req.params.id;
+      const data = req.body;
+      const query = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedData = {
+        $set: {
+          bookName: data.bookName,
+          bookImage: data.bookImage,
+          category: data.category,
+          author: data.author,
+          rating: data.rating,
+          updaterEmail: data.updaterEmail,
+        },
+      };
+
+      const result = await booksCollection.updateOne(
+        query,
+        updatedData,
+        options,
+      );
+      res.send(result);
+    });
+
+
+
 
   } finally {
   }
