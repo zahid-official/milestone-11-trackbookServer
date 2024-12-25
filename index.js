@@ -50,6 +50,13 @@ async function run() {
       res.send(result);
     });
 
+    // for allBooks
+    app.get("/allBooks", async (req, res) => {
+      const cursor = booksCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
 
   } finally {
   }
