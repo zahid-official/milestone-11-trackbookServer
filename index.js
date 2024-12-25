@@ -24,22 +24,25 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-
     // database collection
     const database = client.db("booksDB");
     const booksCollection = database.collection("books");
     const borrowedCollection = database.collection("borrowed");
 
-    // read 
+    // read
     app.get("/", (req, res) => {
       res.send("Server Connected");
     });
 
+    // for category
+    app.get("/category/:category", async (req, res) => {
+      const category = req.params.category;
+      const query = { category };
+      const result = await booksCollection.find(query).toArray();
+      res.send(result);
+    });
 
-
-
-
-
+    
   } finally {
   }
 }
