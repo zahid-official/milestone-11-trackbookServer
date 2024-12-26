@@ -1,5 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const express = require("express");
 const cors = require("cors");
@@ -7,8 +8,33 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
+
+// custom middleware
+const verifyToken = (req, res, next) => {
+  const clientToken = req.cookies?.token;
+  if(!clientToken){
+    return res.status(401).send({message: 'Unauthorize Access'});
+  }
+
+  // verify both token
+  jwt.verify(clientToken, process.env.ACCESS_TOKEN, (error, decoded) => {
+    if(error){
+      return res.status(401).send({message: 'Unauthorize Access'});
+    }
+    
+    // creating a new property in req object
+    req.accessToken = decoded
+    next();
+  })
+}
 
 // MongoDb
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster1.rjxsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1`;
@@ -29,7 +55,61 @@ async function run() {
     const booksCollection = database.collection("books");
     const borrowedCollection = database.collection("borrowed");
 
-    // read
+
+
+
+
+
+
+
+    // jwt token generate
+    app.post("/jwt", (req, res) => {
+      const email = req.body;
+      const token = jwt.sign(email, process.env.ACCESS_TOKEN, {
+        expiresIn: "1h",
+      });
+      res
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: false,
+        })
+        .send({ signIn: true });
+    });
+
+    // jwt token remove
+    app.post("/logout", (req, res) => {
+      res.clearCookie("token", {
+        httpOnly: true,
+        secure: false,
+      })
+      .send({signOut: true});
+    });
+
+
+    // for borrowedBooks
+    app.get("/borrowedBooks/:email", verifyToken, async (req, res) => {
+      const email = req.params.email;
+      const query = { borrowerEmail: email };
+
+      // verify email by query email
+      if(req.accessToken.email !== email){
+        return res.status(403).send({message: 'Forbidden Access'});
+      }
+
+      const result = await borrowedCollection.find(query).toArray();
+      res.send(result);
+    });
+
+
+
+
+
+
+
+
+
+
+    // read operation
     app.get("/", (req, res) => {
       res.send("Server Connected");
     });
@@ -65,15 +145,12 @@ async function run() {
       res.send(result);
     });
 
-    // for borrowedBooks
-    app.get("/borrowedBooks/:email", async (req, res) => {
-      const email = req.params.email;
-      const query = { borrowerEmail: email };
-      const result = await borrowedCollection.find(query).toArray();
-      res.send(result);
-    });
+    
 
-    // create for addBook
+
+
+
+    // create operation for addBook
     app.post("/addBook", async (req, res) => {
       const data = req.body;
       const result = await booksCollection.insertOne(data);
@@ -106,7 +183,7 @@ async function run() {
       res.send(result);
     });
 
-    // update for UpdateBook
+    // update operation for UpdateBook
     app.put("/updateBook/:id", async (req, res) => {
       const id = req.params.id;
       const data = req.body;
@@ -131,7 +208,7 @@ async function run() {
       res.send(result);
     });
 
-    // delete for borrowedBooks
+    // delete operation for borrowedBooks
     app.delete("/returnBook", async (req, res) => {
       // delete
       const isbn = req.query.isbn;
@@ -152,15 +229,12 @@ async function run() {
       res.send(result);
     });
 
-    // filter for allBooks
+    // filter operation for allBooks
     app.get("/filter", async (req, res) => {
       const query = { quantity: { $gt: 0 } };
       const result = await booksCollection.find(query).toArray();
       res.send(result);
     });
-
-
-    
   } finally {
   }
 }
