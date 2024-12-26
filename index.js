@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 // middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://trackbook-official.vercel.app"],
     credentials: true,
   })
 );
@@ -20,21 +20,21 @@ app.use(cookieParser());
 // custom middleware
 const verifyToken = (req, res, next) => {
   const clientToken = req.cookies?.token;
-  if(!clientToken){
-    return res.status(401).send({message: 'Unauthorize Access'});
+  if (!clientToken) {
+    return res.status(401).send({ message: "Unauthorize Access" });
   }
 
   // verify both token
   jwt.verify(clientToken, process.env.ACCESS_TOKEN, (error, decoded) => {
-    if(error){
-      return res.status(401).send({message: 'Unauthorize Access'});
+    if (error) {
+      return res.status(401).send({ message: "Unauthorize Access" });
     }
-    
+
     // creating a new property in req object
-    req.accessToken = decoded
+    req.accessToken = decoded;
     next();
-  })
-}
+  });
+};
 
 // MongoDb
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster1.rjxsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1`;
@@ -55,13 +55,6 @@ async function run() {
     const booksCollection = database.collection("books");
     const borrowedCollection = database.collection("borrowed");
 
-
-
-
-
-
-
-
     // jwt token generate
     app.post("/jwt", (req, res) => {
       const email = req.body;
@@ -71,20 +64,23 @@ async function run() {
       res
         .cookie("token", token, {
           httpOnly: true,
-          secure: false,
+          secure: process.env.NODE_ENV==='production',
+          sameSite: process.env.NODE_ENV==='production' ? 'none' : 'strict',
+
         })
         .send({ signIn: true });
     });
 
     // jwt token remove
     app.post("/logout", (req, res) => {
-      res.clearCookie("token", {
-        httpOnly: true,
-        secure: false,
-      })
-      .send({signOut: true});
+      res
+        .clearCookie("token", {
+          httpOnly: true,
+          secure: process.env.NODE_ENV==='production',
+          sameSite: process.env.NODE_ENV==='production' ? 'none' : 'strict',
+        })
+        .send({ signOut: true });
     });
-
 
     // for borrowedBooks
     app.get("/borrowedBooks/:email", verifyToken, async (req, res) => {
@@ -92,22 +88,13 @@ async function run() {
       const query = { borrowerEmail: email };
 
       // verify email by query email
-      if(req.accessToken.email !== email){
-        return res.status(403).send({message: 'Forbidden Access'});
+      if (req.accessToken.email !== email) {
+        return res.status(403).send({ message: "Forbidden Access" });
       }
 
       const result = await borrowedCollection.find(query).toArray();
       res.send(result);
     });
-
-
-
-
-
-
-
-
-
 
     // read operation
     app.get("/", (req, res) => {
@@ -144,11 +131,6 @@ async function run() {
       const result = await booksCollection.findOne(query);
       res.send(result);
     });
-
-    
-
-
-
 
     // create operation for addBook
     app.post("/addBook", async (req, res) => {
