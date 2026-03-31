@@ -293,7 +293,7 @@ ACCESS_TOKEN=your_jwt_secret_key
 
 ## ⚙️ How It Works
 
-<div align="center">
+<div>
 <pre>
                     ┌──────────┐       ┌───────────────┐       ┌──────────────────┐
                     │  Client  │──────►│ Express.js    │──────►│   MongoDB Atlas  │
