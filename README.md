@@ -7,7 +7,7 @@
 A secure RESTful API powering the TrackBook library management platform, handling book catalogs, borrowing workflows, JWT authentication, and user-scoped records through Express.js and MongoDB.
 
 [![Live API](https://img.shields.io/badge/▶_Live_API-trackbook--official.vercel.app-00C853?style=for-the-badge&logo=vercel&logoColor=white)](https://trackbook-official.vercel.app/)
-[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/zahid-official/milestone-11-server)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/zahid-official/milestone-11-trackbookServer)
 <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
 <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
 <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
@@ -245,7 +245,7 @@ milestone-11-server/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/zahid-official/milestone-11-server.git
+git clone https://github.com/zahid-official/milestone-11-trackbookServer.git
 
 # 2. Navigate to the project directory
 cd milestone-11-server
