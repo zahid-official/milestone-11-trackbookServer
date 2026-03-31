@@ -6,7 +6,7 @@
 
 A secure RESTful API powering the TrackBook library management platform, handling book catalogs, borrowing workflows, JWT authentication, and user-scoped records through Express.js and MongoDB.
 
-[![Live API](https://img.shields.io/badge/▶_Live_API-trackbook--official.vercel.app-00C853?style=for-the-badge&logo=vercel&logoColor=white)](https://trackbook-official.vercel.app/)
+[![Live API](https://img.shields.io/badge/▶_Live_API-trackbook--official.vercel.app-0C8DCE?style=for-the-badge&logo=vercel&logoColor=white)](https://trackbook-official.vercel.app/)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/zahid-official/milestone-11-trackbookServer)
 <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
 <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
@@ -20,7 +20,7 @@ A secure RESTful API powering the TrackBook library management platform, handlin
 
 ## 🔍 Overview
 
-**TrackBook Server** is the backend engine behind the [TrackBook](https://trackbook-official.vercel.app/) library management platform. It exposes a RESTful API built with Express.js and MongoDB, enabling the client application to browse book catalogs by category, borrow and return books with quantity tracking, manage user-specific borrowed records, and authenticate users with secure JWT tokens stored in HTTP-only cookies — all deployed seamlessly on Vercel as a serverless function.
+**TrackBook Server** is the backend engine behind the [TrackBook](https://trackbook-official.vercel.app/) library management platform. It exposes a RESTful API built with Express.js and MongoDB, enabling the client application to browse book catalogs by category, borrow and return books with quantity tracking, manage user-specific borrowed records, and authenticate users with secure JWT tokens stored in HTTP-only cookies, all deployed seamlessly on Vercel as a serverless function.
 
 > _Where every read begins with a reliable server._
 
@@ -151,7 +151,7 @@ A secure RESTful API powering the TrackBook library management platform, handlin
 <tr><th align="left">Method</th><th align="left">Endpoint</th><th align="left">Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>GET</code></td><td><code>/</code></td><td>Health check — returns server connection status</td></tr>
+<tr><td><code>GET</code></td><td><code>/</code></td><td>Health check, returns server connection status</td></tr>
 <tr><td><code>GET</code></td><td><code>/allBooks</code></td><td>Fetch all books in the catalog</td></tr>
 <tr><td><code>GET</code></td><td><code>/category/:category</code></td><td>Fetch books filtered by category name</td></tr>
 <tr><td><code>GET</code></td><td><code>/bookDetails/:id</code></td><td>Fetch a single book by its ObjectId</td></tr>
@@ -170,8 +170,8 @@ A secure RESTful API powering the TrackBook library management platform, handlin
 </thead>
 <tbody>
 <tr><td><code>GET</code></td><td><code>/borrowedBooks/:email</code></td><td>Fetch borrowed books for a specific user (🔒 JWT protected)</td></tr>
-<tr><td><code>POST</code></td><td><code>/borrow</code></td><td>Borrow a book — validates duplicates and decreases quantity</td></tr>
-<tr><td><code>DELETE</code></td><td><code>/returnBook?isbn=...&borrowerEmail=...</code></td><td>Return a book — removes record and increases quantity</td></tr>
+<tr><td><code>POST</code></td><td><code>/borrow</code></td><td>Borrow a book, validates duplicates and decreases quantity</td></tr>
+<tr><td><code>DELETE</code></td><td><code>/returnBook?isbn=...&borrowerEmail=...</code></td><td>Return a book, removes record and increases quantity</td></tr>
 </tbody>
 </table>
 
@@ -367,7 +367,7 @@ This server is deployed on **Vercel** as a serverless function. The `vercel.json
 <tr><th align="left">Repository</th><th align="left">Description</th><th align="left">Link</th></tr>
 </thead>
 <tbody>
-<tr><td><b>TrackBook Client</b></td><td>React frontend — browse books, borrow & return, manage records</td><td><a href="https://github.com/zahid-official/milestone-11-trackbookClient">GitHub</a></td></tr>
+<tr><td><b>TrackBook Client</b></td><td>React frontend , browse books, borrow & return, manage records</td><td><a href="https://github.com/zahid-official/milestone-11-trackbookClient">GitHub</a></td></tr>
 <tr><td><b>Live App</b></td><td>Deployed full-stack application on Vercel</td><td><a href="https://trackbook-official.vercel.app/">trackbook-official.vercel.app</a></td></tr>
 </tbody>
 </table>
@@ -388,7 +388,7 @@ This server is deployed on **Vercel** as a serverless function. The `vercel.json
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/zahid-web)
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:zahid.official8@gmail.com)
 
-  <p>Creating impactful digital experiences with passion and purposeful design</p>
+  <p>Powering modern web applications with scalable and secure backend systems</p>
 </div>
 
 <br/>
@@ -412,4 +412,4 @@ git push origin feature/your-feature-name
 # 5. Open a Pull Request against the main branch
 ```
 
-<p align="center"><b>TrackBook Server</b> — <i>Powering every read with reliable, scalable API infrastructure.</i></p>
+<p align="center"><b>TrackBook Server</b> - <i>Powering every read with reliable, scalable API infrastructure.</i></p>
