@@ -100,8 +100,8 @@ A secure RESTful API powering the TrackBook library management platform, handlin
 │                     Client (React App)                      │
 │          https://trackbook-official.vercel.app              │
 └──────────────────────────────┬──────────────────────────────┘
-                               │  HTTP Requests (REST)
-                               ▼
+                      │  HTTP Requests (REST)
+▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    Express.js Server                        │
 │  ┌────────────┐  ┌──────────────┐  ┌─────────────────────┐  │
@@ -114,10 +114,10 @@ A secure RESTful API powering the TrackBook library management platform, handlin
 │  │   Parser   │  │ PUT  /update │  │ • Email Scoping     │  │
 │  │ • Verify   │  │ DEL  /return │  │                     │  │
 │  │   Token    │  │ GET  /filter │  │                     │  │
-│  └────────────┘  └──────┬───────┘  └─────────────────────┘  │
-│                         │                                   │
-├─────────────────────────┼───────────────────────────────────┤
-│                         ▼                                   │
+│  └────────────┘  └───────┬──────┘  └─────────────────────┘  │
+│                          │                                  │
+├──────────────────────────┼──────────────────────────────────┤
+│                          ▼                                  │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │              MongoDB Atlas (Cluster1)                │   │
 │  │   ┌───────────────────┐  ┌────────────────────────┐  │   │
