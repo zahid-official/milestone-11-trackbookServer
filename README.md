@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://trackbook-official.vercel.app/assets/logo.png" alt="TrackBook Logo" width="50" />
+<img src="https://trackbook-official.vercel.app/assets/favicon.png" alt="TrackBook Logo"/>
 
 # TrackBook Server - Library Management API
 
@@ -367,7 +367,7 @@ This server is deployed on **Vercel** as a serverless function. The `vercel.json
 <tr><th align="left">Repository</th><th align="left">Description</th><th align="left">Link</th></tr>
 </thead>
 <tbody>
-<tr><td><b>TrackBook Client</b></td><td>React frontend — browse books, borrow & return, manage records</td><td><a href="https://github.com/zahid-official/milestone-11">GitHub</a></td></tr>
+<tr><td><b>TrackBook Client</b></td><td>React frontend — browse books, borrow & return, manage records</td><td><a href="https://github.com/zahid-official/milestone-11-trackbookClient">GitHub</a></td></tr>
 <tr><td><b>Live App</b></td><td>Deployed full-stack application on Vercel</td><td><a href="https://trackbook-official.vercel.app/">trackbook-official.vercel.app</a></td></tr>
 </tbody>
 </table>
